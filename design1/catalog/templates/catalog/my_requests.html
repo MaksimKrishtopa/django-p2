@@ -25,7 +25,10 @@
                     <td>{{ request.category }}</td>
                     <!-- Выведите другие поля, если необходимо -->
                 </tr>
-            {% endfor %}
+            {% for request in requests %}
+    <p>{{ request.status }} - {{ request.category }} - <a href="{% url 'change_request_status' request.id 'In Progress' %}">Принять в работу</a> <a href="{% url 'change_request_status' request.id 'Completed' %}">Выполнено</a></p>
+{% endfor %}
+
         </tbody>
     </table>
 </body>

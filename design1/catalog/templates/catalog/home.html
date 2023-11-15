@@ -8,7 +8,15 @@
     <title>Главная страница</title>
 </head>
 <body>
-    <h1>Добро пожаловать на главную страницу!</h1>
-    <!-- Добавьте дополнительный контент, если необходимо -->
+    <h1>Главная страница</h1>
+
+    <!-- Вывод последних выполненных заявок -->
+    <h2>Последние выполненные заявки:</h2>
+    {% for request in latest_completed_requests %}
+        <p>{{ request.timestamp }} - {{ request.title }} - {{ request.category }} - <img src="{{ request.photo.url }}" alt="Фото"></p>
+    {% endfor %}
+
+    <!-- Счетчик заявок в статусе "Принято в работу" -->
+    <h2>Заявок в работе: {{ in_progress_count }}</h2>
 </body>
 </html>

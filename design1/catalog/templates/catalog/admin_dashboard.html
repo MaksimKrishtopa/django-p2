@@ -1,0 +1,17 @@
+<!-- catalog/templates/catalog/admin_dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управления для администратора</title>
+</head>
+<body>
+    <h1>Панель управления для администратора</h1>
+    <!-- Выведите все заявки с возможностью изменения их статуса -->
+    {% for request in requests %}
+        <p>{{ request.status }} - {{ request.category }} - <a href="{% url 'change_request_status' request.id 'In Progress' %}">Принять в работу</a> <a href="{% url 'change_request_status' request.id 'Completed' %}">Выполнено</a></p>
+    {% endfor %}
+</body>
+</html>
