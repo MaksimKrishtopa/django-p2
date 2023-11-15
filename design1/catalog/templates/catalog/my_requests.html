@@ -1,0 +1,32 @@
+<!-- catalog/templates/catalog/my_requests.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои заявки</title>
+</head>
+<body>
+    <h1>Мои заявки</h1>
+    <!-- Выведите заявки пользователя, например, в виде таблицы -->
+    <table>
+        <thead>
+            <tr>
+                <th>Статус</th>
+                <th>Категория</th>
+                <!-- Добавьте другие заголовки, если необходимо -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+                <tr>
+                    <td>{{ request.status }}</td>
+                    <td>{{ request.category }}</td>
+                    <!-- Выведите другие поля, если необходимо -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
