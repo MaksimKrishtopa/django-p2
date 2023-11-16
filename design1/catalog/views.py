@@ -24,19 +24,23 @@ def login_user(request):
 
 def register_user(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        user_form = CustomUserCreationForm(request.POST)
         profile_form = UserProfileForm(request.POST)
-        if form.is_valid() and profile_form.is_valid():
-            user = form.save()
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
+
             login(request, user)
             return redirect('home')
+
     else:
-        form = CustomUserCreationForm()
+        user_form = CustomUserCreationForm()
         profile_form = UserProfileForm()
-    return render(request, 'catalog/register.html', {'form': form, 'profile_form': profile_form})
+
+    return render(request, 'catalog/register.html', {'user_form': user_form, 'profile_form': profile_form})
 
 @login_required
 def profile(request):
