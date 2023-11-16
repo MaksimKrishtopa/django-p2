@@ -1,4 +1,4 @@
-# design1/catalog/forms.py
+
 import regex
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
