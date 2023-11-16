@@ -1,11 +1,4 @@
-<!-- design1/catalog/templates/catalog/login.html -->
-{% extends 'catalog/base.html' %}
-
-{% block title %}Login{% endblock %}
-
-{% block content %}
-    <style>
-        /* design1/catalog/static/css/styles.css */
+/* design1/catalog/static/css/styles.css */
 
 body {
     font-family: 'Arial', sans-serif;
@@ -73,12 +66,3 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #45a049;
 }
-
-    </style>
-    <h2>Login</h2>
-    <form method="post" action="{% url 'login_user' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Login">
-    </form>
-{% endblock %}

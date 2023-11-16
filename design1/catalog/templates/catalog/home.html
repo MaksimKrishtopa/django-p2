@@ -1,9 +1,111 @@
-<!-- design1/catalog/templates/catalog/home.html -->
 {% extends 'catalog/base.html' %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
+{% load static %}
+    <style>
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+nav {
+    background-color: #444;
+    color: white;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+section {
+    padding: 20px;
+}
+
+form {
+    max-width: 400px;
+    margin: auto;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+    </style>
+ <form method="post" action="{% url 'register_user' %}">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'logout_user' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login_user' %}">Login</a></li>
+        {% endif %}
+    </form>
+
     <h2>Welcome to Design Studio</h2>
     <p>Explore our interior design services!</p>
+
+    <h3>Last Completed Requests</h3>
+    {% for request in latest_requests %}
+        <div>
+            <p>Title: {{ request.title }}</p>
+            <p>Category: {{ request.category }}</p>
+            <p>Description: {{ request.description }}</p>
+            <p>Timestamp: {{ request.timestamp }}</p>
+            {% if request.image %}
+                <img src="{{ request.image.url }}" alt="Design Image">
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <p>Requests In Progress: {{ in_progress_count }}</p>
+
+
+
+<img src="{% static 'img/u3juqgpprjfyzehige08p82rfjvar5y5.jpg' %}" alt="Design Studio Logo">
 {% endblock %}

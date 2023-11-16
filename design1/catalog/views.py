@@ -4,9 +4,15 @@ from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-
+from .models import DesignRequest
 def home(request):
-    return render(request, 'catalog/home.html')
+    # Получаем последние 4 заявки в статусе "Выполнено"
+    latest_requests = DesignRequest.objects.filter(status='Completed').order_by('-timestamp')[:4]
+
+    # Получаем количество заявок в статусе "Принято в работу"
+    in_progress_count = DesignRequest.objects.filter(status='In Progress').count()
+
+    return render(request, 'catalog/home.html', {'latest_requests': latest_requests, 'in_progress_count': in_progress_count})
 
 def login_user(request):
     if request.method == 'POST':
