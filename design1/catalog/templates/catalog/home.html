@@ -1,22 +1,11 @@
-<!-- catalog/templates/catalog/home.html -->
-
+<!-- design1/catalog/templates/catalog/home.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
+    <title>Design Studio</title>
 </head>
 <body>
-    <h1>Главная страница</h1>
-
-    <!-- Вывод последних выполненных заявок -->
-    <h2>Последние выполненные заявки:</h2>
-    {% for request in latest_completed_requests %}
-        <p>{{ request.timestamp }} - {{ request.title }} - {{ request.category }} - <img src="{{ request.photo.url }}" alt="Фото"></p>
-    {% endfor %}
-
-    <!-- Счетчик заявок в статусе "Принято в работу" -->
-    <h2>Заявок в работе: {{ in_progress_count }}</h2>
+    <h1>Welcome to Design Studio</h1>
+    <p>Explore our interior design services!</p>
 </body>
 </html>
