@@ -1,11 +1,9 @@
 <!-- design1/catalog/templates/catalog/home.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Design Studio</title>
-</head>
-<body>
-    <h1>Welcome to Design Studio</h1>
+{% extends 'catalog/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h2>Welcome to Design Studio</h2>
     <p>Explore our interior design services!</p>
-</body>
-</html>
+{% endblock %}

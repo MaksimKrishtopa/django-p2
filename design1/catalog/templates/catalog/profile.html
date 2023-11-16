@@ -1,11 +1,11 @@
 <!-- design1/catalog/templates/catalog/profile.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Profile</title>
-</head>
-<body>
+{% extends 'catalog/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
     <h2>Welcome to your profile</h2>
     <p>You are logged in as {{ user.username }}.</p>
-</body>
-</html>
+    <p>Full Name: {{ user.userprofile.fio }}</p>
+    <p>Email: {{ user.email }}</p>
+{% endblock %}
