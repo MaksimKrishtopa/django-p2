@@ -1,0 +1,14 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}Confirm Delete{% endblock %}
+
+{% block content %}
+  <h2>Confirm Delete</h2>
+  <p>Are you sure you want to delete the design request "{{ design_request.title }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete it</button>
+    <a href="{% url 'design_request_list' %}">Cancel</a>
+  </form>
+{% endblock %}
+

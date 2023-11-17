@@ -1,0 +1,36 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}My Design Requests{% endblock %}
+
+{% block content %}
+  <h2>My Design Requests</h2>
+  <label for="status">Filter by Status:</label>
+  <select name="status" id="status" onchange="location = this.value;">
+    <option value="?status=all">All</option>
+    <option value="?status=New">New</option>
+    <option value="?status=In Progress">In Progress</option>
+    <option value="?status=Completed">Completed</option>
+  </select>
+  <table>
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for design_request in design_requests %}
+        <tr>
+          <td>{{ design_request.timestamp }}</td>
+          <td>{{ design_request.title }}</td>
+          <td>{{ design_request.description }}</td>
+          <td>{{ design_request.category }}</td>
+          <td>{{ design_request.status }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

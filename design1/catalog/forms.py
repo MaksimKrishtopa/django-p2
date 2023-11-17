@@ -1,5 +1,6 @@
 # forms.py
 
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -8,15 +9,20 @@ from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 from .models import UserProfile
 
+from django import forms
+from .models import DesignRequest, DesignCategory
+
 @deconstructible
 class FIOValidator(validators.RegexValidator):
     regex = r"^[а-яА-Я\s-]+$"
     message = "Введите корректное ФИО. Значение может содержать только кириллические буквы, пробелы и тире."
 
+
 @deconstructible
 class LoginValidator(validators.RegexValidator):
     regex = r"^[a-zA-Z-]+$"
     message = "Введите корректный логин. Значение может содержать только латинские буквы и тире."
+
 
 class UserProfileForm(forms.ModelForm):
     fio = forms.CharField(
@@ -31,6 +37,7 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ['fio']
         labels = {'fio': 'ФИО'}
+
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
@@ -69,3 +76,24 @@ class CustomUserCreationForm(UserCreationForm):
             raise forms.ValidationError('Этот логин уже занят. Пожалуйста, выберите другой.')
 
         return username
+
+
+
+
+class DesignRequestForm(forms.ModelForm):
+    class Meta:
+        model = DesignRequest
+        fields = ['title', 'category', 'description', 'photo']
+
+
+class CreateDesignRequestForm(forms.ModelForm):
+    class Meta:
+        model = DesignRequest
+        fields = ['title', 'category', 'description', 'photo']
+
+
+class DesignCategoryForm(forms.ModelForm):
+    class Meta:
+        model = DesignCategory
+        fields = ['name']
+        labels = {'name': ('Название категории')}

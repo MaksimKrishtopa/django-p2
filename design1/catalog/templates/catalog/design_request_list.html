@@ -1,0 +1,32 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}My Design Requests{% endblock %}
+
+{% block content %}
+  <h2>My Design Requests</h2>
+  {% if design_requests %}
+    <ul>
+      {% for design_request in design_requests %}
+        <li>
+          <p>Title: {{ design_request.title }}</p>
+          <p>Category: {{ design_request.category }}</p>
+          <p>Description: {{ design_request.description }}</p>
+          <p>Status: {{ design_request.status }}</p>
+
+          <form method="post" action="{% url 'delete_design_request' design_request.pk %}">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No design requests found.</p>
+  {% endif %}
+<h1>Create Design Request</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}

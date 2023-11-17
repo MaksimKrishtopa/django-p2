@@ -1,6 +1,5 @@
 from django.contrib import admin
+from .models import DesignRequest, DesignCategory
 
-# Register your models here.
-# catalog/admin.py
-
-
+admin.site.register(DesignRequest)
+admin.site.register(DesignCategory)

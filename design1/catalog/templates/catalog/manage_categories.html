@@ -1,0 +1,12 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}Manage Categories{% endblock %}
+
+{% block content %}
+  <h2>Manage Categories</h2>
+  <ul>
+    {% for category in categories %}
+      <li>{{ category.name }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

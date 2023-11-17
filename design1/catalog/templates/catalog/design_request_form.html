@@ -1,6 +1,6 @@
 {% extends 'catalog/base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Create Design Request{% endblock %}
 
 {% block content %}
     <style>
@@ -74,21 +74,15 @@ input[type="submit"]:hover {
 }
 
     </style>
-    <h2>Welcome to Design Studio</h2>
-    <p>Explore our interior design services!</p>
+    {% extends 'catalog/base.html' %}
 
-    <h3>Last Completed Requests</h3>
-    {% for request in latest_requests %}
-        <div>
-            <p>Title: {{ request.title }}</p>
-            <p>Category: {{ request.category }}</p>
-            <p>Description: {{ request.description }}</p>
-            <p>Timestamp: {{ request.timestamp }}</p>
-            {% if request.image %}
-                <img src="{{ request.image.url }}" alt="Design Image">
-            {% endif %}
-        </div>
-    {% endfor %}
 
-    <p>Requests In Progress: {{ in_progress_count }}</p>
+  <h2>Create Design Request</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
 {% endblock %}
+
+

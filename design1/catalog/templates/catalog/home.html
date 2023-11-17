@@ -75,6 +75,7 @@ input[type="submit"]:hover {
 }
 
     </style>
+
  <form method="post" action="{% url 'register_user' %}">
         {% csrf_token %}
         {{ user_form.as_p }}
@@ -90,22 +91,20 @@ input[type="submit"]:hover {
     <h2>Welcome to Design Studio</h2>
     <p>Explore our interior design services!</p>
 
-    <h3>Last Completed Requests</h3>
-    {% for request in latest_requests %}
-        <div>
-            <p>Title: {{ request.title }}</p>
-            <p>Category: {{ request.category }}</p>
-            <p>Description: {{ request.description }}</p>
-            <p>Timestamp: {{ request.timestamp }}</p>
-            {% if request.image %}
-                <img src="{{ request.image.url }}" alt="Design Image">
-            {% endif %}
-        </div>
+     <h2>Последние выполненные заявки:</h2>
+    {% for request in last_completed_requests %}
+        <ul>
+            <li><p>Временная метка: {{ request.timestamp }}</p></li>
+           <li> <p>Название: {{ request.title }}</p></li>
+           <li> <p>Категория заявки: {{ request.category.name }}</li>
+           <li> <img src="{% static '' %}" alt="request img"></li>
+            <span>---------------------------------------------</span>
+        </ul>
     {% endfor %}
 
-    <p>Requests In Progress: {{ in_progress_count }}</p>
-
+    <h2>Количество заявок в статусе "Принято в работу": {{ in_progress_count }}</h2>
 
 
 <img src="{% static 'img/u3juqgpprjfyzehige08p82rfjvar5y5.jpg' %}" alt="Design Studio Logo">
 {% endblock %}
+
