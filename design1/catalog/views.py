@@ -5,6 +5,7 @@ from .forms import CustomUserCreationForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .models import DesignRequest
+
 def home(request):
 
     latest_requests = DesignRequest.objects.filter(status='Completed').order_by('-timestamp')[:4]

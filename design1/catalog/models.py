@@ -3,14 +3,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db import models
 
+from django.utils.translation import gettext_lazy as _
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    fio = models.CharField(max_length=255, blank=False)
+    fio = models.CharField(max_length=255, blank=False, verbose_name=_('ФИО'))
 
     def __str__(self):
         return self.user.username
-
 
 class DesignRequest(models.Model):
     title = models.CharField(max_length=200)
