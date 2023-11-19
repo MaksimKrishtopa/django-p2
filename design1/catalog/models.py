@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.contrib.auth.models import User
 from django.db import models
@@ -20,8 +21,8 @@ class DesignRequest(models.Model):
                                  on_delete=models.CASCADE)
 
     description = models.TextField()
-    image = models.ImageField(upload_to='design_images/', blank=True, null=True)
-    photo = models.ImageField(upload_to='design_photos/', default='no-photo.jpg')
+
+    photo = models.ImageField(upload_to='design_photos/', blank=False, null=True, validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg', 'bmp'])] )
 
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь", default=None)
