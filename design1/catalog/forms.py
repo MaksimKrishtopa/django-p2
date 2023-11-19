@@ -90,6 +90,9 @@ class CreateDesignRequestForm(forms.ModelForm):
     class Meta:
         model = DesignRequest
         fields = ['title', 'category', 'description', 'photo']
+        widgets = {
+            'description': forms.Textarea(attrs={'cols': 80, 'rows': 5}),
+        }
 
 
 class DesignCategoryForm(forms.ModelForm):

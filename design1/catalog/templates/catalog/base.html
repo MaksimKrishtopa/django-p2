@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Design Studio{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'catalog/static/css/styles.css' %}">
 
 </head>
 <body>
@@ -24,7 +24,7 @@
         <li><a href="{% url 'login_user' %}">Login</a></li>
         <li><a href="{% url 'register_user' %}">Register</a></li>
     {% endif %}
-            <li><a href="{% url 'design_request_list' %}">My Design Requests</a></li>
+            <li><a href="{% url 'design_request_list' %}">Мои заявки</a></li>
         </ul>
     </nav>
     <section>

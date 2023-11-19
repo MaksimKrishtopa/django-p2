@@ -76,13 +76,6 @@ input[type="submit"]:hover {
     </style>
     {% extends 'catalog/base.html' %}
 
-
-  <h2>Create Design Request</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
 {% endblock %}
 
 

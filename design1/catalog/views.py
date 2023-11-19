@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm, UserProfileForm
-
+from .forms import CreateDesignRequestForm
 from django.contrib.auth import logout
 
 from django.contrib import messages
@@ -22,7 +22,7 @@ def home(request):
     last_completed_requests = DesignRequest.objects.filter(status='Выполнено').order_by('-timestamp')[:4]
 
     # Получаем количество заявок в статусе 'In Progress'
-    in_progress_count = DesignRequest.objects.filter(status='В работе').count()
+    in_progress_count = DesignRequest.objects.filter(status='Принято в работу').count()
 
     context = {
         'last_completed_requests': last_completed_requests,
@@ -82,6 +82,7 @@ def logout_user(request):
 
 
 
+
 @login_required
 def create_design_request(request):
     if request.method == 'POST':
@@ -91,13 +92,15 @@ def create_design_request(request):
             design_request.user = request.user
             design_request.status = 'Новая'
             design_request.save()
+            messages.success(request, 'Заявка успешно создана.')
             return redirect('design_request_list')
+        else:
+            messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
+            print(form.errors)  # Добавим вывод ошибок в консоль для отладки
     else:
         form = CreateDesignRequestForm()
 
-    return render(request, 'catalog/create_design_request.html', {'form': form})
-
-
+    return render(request, 'catalog/design_request_list.html', {'form': form})
 @login_required
 def view_design_requests(request):
     status = request.GET.get('status', 'all')
@@ -112,8 +115,14 @@ def view_design_requests(request):
 
 @login_required(login_url='/login/')
 def design_request_list(request):
-    design_requests = DesignRequest.objects.filter(user=request.user.id)
-    return render(request, 'catalog/design_request_list.html', {'design_requests': design_requests})
+    status = request.GET.get('status', 'all')
+
+    if status == 'all':
+        design_requests = DesignRequest.objects.filter(user=request.user)
+    else:
+        design_requests = DesignRequest.objects.filter(user=request.user, status=status)
+
+    return render(request, 'catalog/design_request_list.html', {'design_requests': design_requests, 'selected_status': status})
 
 
 def delete_design_request(request, pk):

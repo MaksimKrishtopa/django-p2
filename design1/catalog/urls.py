@@ -1,8 +1,12 @@
+from django.conf import settings
+from django.template.context_processors import static
 from django.urls import path, include
 
 from . import views
-from .views import home, login_user, register_user, profile, logout_user, create_design_request, design_request_list, delete_design_request, view_design_requests
+from .views import home, login_user, register_user, profile, logout_user, create_design_request, design_request_list, \
+    delete_design_request, view_design_requests
 from django.contrib.auth.views import LogoutView
+
 urlpatterns = [
     path('', home, name='home'),
     path('login/', login_user, name='login_user'),
@@ -15,3 +19,9 @@ urlpatterns = [
     path('view/', view_design_requests, name='view_design_requests'),  # добавим новый URL для просмотра заявок
 
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
