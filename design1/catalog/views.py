@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomUserCreationForm, UserProfileForm
+from .forms import CustomUserCreationForm, UserProfileForm, ChangeStatusForm, CompleteDesignForm
 from .forms import CreateDesignRequestForm
 from django.contrib.auth import logout
 
@@ -136,27 +136,37 @@ def delete_design_request(request, pk):
     return render(request, 'catalog/design_request_confirm_delete.html', {'design_request': design_request})
 
 
-@login_required
 def change_status(request, pk):
     design_request = get_object_or_404(DesignRequest, pk=pk, user=request.user, status='Новая')
 
     if request.method == 'POST':
-        status = request.POST.get('status', 'In Progress')
+        status_form = ChangeStatusForm(request.POST)
+        complete_form = CompleteDesignForm(request.POST, request.FILES)
 
-        # Проверка статуса
-        if status == 'Completed':
-            image = request.FILES.get('image')
-            if not image:
-                messages.error(request, 'Добавьте изображение дизайна для статуса "Выполнено".')
-                return redirect('change_status', pk=pk)
+        if status_form.is_valid() and complete_form.is_valid():
+            status = status_form.cleaned_data['status']
 
-        design_request.status = status
-        design_request.save()
+            if status == 'Выполнено':
+                design_image = complete_form.cleaned_data['design_image']
+                if not design_image:
+                    messages.error(request, 'Добавьте изображение дизайна для статуса "Выполнено".')
+                    return redirect('change_status', pk=pk)
 
-        return redirect('view_design_requests')
+            elif status == 'Принято в работу':
+                comment = complete_form.cleaned_data['comment']
+                if not comment:
+                    messages.error(request, 'Добавьте комментарий для статуса "Принято в работу".')
+                    return redirect('change_status', pk=pk)
 
-    return render(request, 'catalog/change_status.html', {'design_request': design_request})
+            design_request.status = status
+            design_request.save()
 
+            return redirect('view_design_requests')
+    else:
+        status_form = ChangeStatusForm()
+        complete_form = CompleteDesignForm()
+
+    return render(request, 'catalog/change_status.html', {'design_request': design_request, 'status_form': status_form, 'complete_form': complete_form})
 
 @login_required
 def manage_categories(request):

@@ -4,20 +4,13 @@
 
 {% block content %}
   <h2>Change Status</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="status">Select Status:</label>
-    <select name="status" id="status">
-      <option value="In Progress">In Progress</option>
-      <option value="Completed">Completed</option>
-    </select>
-    <br>
-    {% if design_request.status == 'Completed' %}
-      <label for="image">Design Image:</label>
-      <input type="file" name="image" accept="image/*" required>
-      <br>
-    {% endif %}
-    <button type="submit">Change Status</button>
-  </form>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ status_form.as_p }}
+  {% if status_form.instance.status == 'Выполнено' %}
+    {{ complete_form.as_p }}
+  {% endif %}
+  <button type="submit">Изменить статус</button>
+</form>
   <a href="{% url 'view_design_requests' %}">Back to My Design Requests</a>
 {% endblock %}
