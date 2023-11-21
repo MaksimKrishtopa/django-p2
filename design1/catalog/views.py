@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomUserCreationForm, UserProfileForm, ChangeStatusForm, CompleteDesignForm
+from .forms import CustomUserCreationForm, UserProfileForm, ChangeStatusForm
 from .forms import CreateDesignRequestForm
 from django.contrib.auth import logout
 

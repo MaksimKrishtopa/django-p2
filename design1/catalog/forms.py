@@ -209,21 +209,20 @@ class DesignCategoryForm(forms.ModelForm):
 
 
 class ChangeStatusForm(forms.ModelForm):
-    class Meta:
-        model = DesignRequest
-        fields = ['status']
-
-    status = forms.CharField()
 
     def clean(self):
-        cleaned_data = super().clean()
-        status = cleaned_data.get('status')
+        status = self.cleaned_data.get('status')
+        image = self.cleaned_data.get('image')
+        comment = self.cleaned_data.get('comment')
 
-        if status == 'Принято в работу' and not self.instance.comment:
-            raise forms.ValidationError({'status': 'Добавьте комментарий для статуса "Принято в работу".'})
-        elif status == 'Выполнено' and not self.instance.photo:
-            raise forms.ValidationError({'status': 'Добавьте изображение дизайна для статуса "Выполнено".'})
-        return cleaned_data
+        if self.instance.status != 'Новая':
+            raise ValidationError("Статус можно менять только у новых заявок!")
+
+        if status == 'Выполнено' and not image:
+            raise ValidationError("Заявке со статусом 'Выполнено' надо прикреплять фотографию дизайна!")
+
+        if status == 'Принято в работу' and not comment:
+            raise ValidationError("Заявке со статусом 'Принята в работу' надо оставлять комментарий!")
 
 
 class CompleteDesignForm(forms.ModelForm):

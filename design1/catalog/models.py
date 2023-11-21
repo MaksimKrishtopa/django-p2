@@ -39,19 +39,21 @@ class DesignRequest(models.Model):
     category = models.ForeignKey("DesignCategory", max_length=150, verbose_name='designrequest category', blank=False, on_delete=models.CASCADE)
     description = models.TextField()
     photo = models.ImageField(upload_to='design_photos/', blank=False, null=True, validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg', 'bmp'])])
+    image = models.ImageField(upload_to='design_photos/', blank=True, null=True,
+                              validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg', 'bmp'])])
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь", default=None)
     status = models.CharField(max_length=20, choices=[('Новая', 'Новая'), ('Принято в работу', 'Принято в работу'), ('Выполнено', 'Выполнено')], default='Новая')
     comment = models.TextField(blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        if self.status == 'Выполнено' and not self.photo:
-            raise ValidationError({'photo': 'Добавьте изображение дизайна для статуса "Выполнено".'})
-        elif self.status == 'Выполнено':
-            self.comment = ""  # Сбрасываем комментарий, если статус "Выполнено"
-        elif self.status == 'Принято в работу':
-            self.photo = None  # Сбрасываем изображение, если статус "Принято в работу"
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if self.status == 'Выполнено' and not self.image:
+    #         raise ValidationError('Добавьте изображение дизайна для статуса "Выполнено".')
+    #     if self.status == 'Выполнено':
+    #         self.comment = ""  # Сбрасываем комментарий, если статус "Выполнено"
+    #     if self.status == 'Принято в работу':
+    #         self.image = None  # Сбрасываем изображение, если статус "Принято в работу"
+    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
