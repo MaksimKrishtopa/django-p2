@@ -1,0 +1,14 @@
+version: '3.10'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8080
+    volumes:
+      - .:/kardan
+    ports:
+      - "8080:8080"
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
