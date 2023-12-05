@@ -16,10 +16,6 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
 
-    # Если аргументы командной строки включают 'runserver', убедитесь, что порт 8080 установлен
-    if 'runserver' in sys.argv and '8080' not in sys.argv:
-        sys.argv.append('8080')
-
     execute_from_command_line(sys.argv)
 
 
